@@ -11,6 +11,11 @@ spring:
       hibernate:
       format_sql: true
       #show_sql: true
+  batch:
+    job:
+      name: ${job.name:NONE}
+    jdbc:
+      initialize-schema: ALWAYS
 
 logging.level:
   sql: trace

@@ -50,6 +50,8 @@ public class Item {
         this.stcokQuantity = resetStock;
     }
 
+    protected Item() {}
+
     @Builder
     public Item(String name, int price, int stcokQuantity, String artist, String etc) {
         this.name = name;

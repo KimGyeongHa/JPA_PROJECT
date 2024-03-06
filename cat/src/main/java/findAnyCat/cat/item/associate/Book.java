@@ -12,4 +12,6 @@ public class Book extends Item {
     public Book(String name, int price, int stcokQuantity, String artist, String etc) {
         super(name, price, stcokQuantity, artist, etc);
     }
+
+    protected Book() {}
 }

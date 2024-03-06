@@ -22,7 +22,7 @@ public class ItemRepsoitory {
     }
 
     public Long addItemToBuilder(ItemJoinRequest itemJoinRequest){
-        Book item = Book.bookBuilder().name(itemJoinRequest.name())
+        Item item = Book.bookBuilder().name(itemJoinRequest.name())
                 .stcokQuantity(itemJoinRequest.stockQuantity())
                 .price(itemJoinRequest.price())
                 .artist(itemJoinRequest.author())
