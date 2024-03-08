@@ -1,4 +1,4 @@
-package findAnyCat.cat.member.controller.request;
+package findAnyCat.cat.member.service.request;
 
 import jakarta.validation.constraints.NotEmpty;
 

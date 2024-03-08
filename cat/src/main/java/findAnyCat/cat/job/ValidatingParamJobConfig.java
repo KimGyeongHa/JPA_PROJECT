@@ -1,6 +1,7 @@
 package findAnyCat.cat.job;
 
 
+import findAnyCat.cat.job.listener.JobLoggerListener;
 import findAnyCat.cat.job.validator.Validating;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -25,7 +26,7 @@ public class ValidatingParamJobConfig {
     public Job validatingParamJob(JobRepository jobRepository,Step oredrStep){
         return new JobBuilder("validatingParamJob",jobRepository)
                 .start(oredrStep)
-                .validator(new Validating())
+                .listener(new JobLoggerListener())
                 .build();
     }
 

@@ -1,4 +1,4 @@
-package findAnyCat.cat.item.controller.request;
+package findAnyCat.cat.item.service.request;
 
 import findAnyCat.cat.item.Item;
 import findAnyCat.cat.item.associate.Book;

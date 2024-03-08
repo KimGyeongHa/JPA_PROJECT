@@ -2,7 +2,7 @@ package findAnyCat.cat.member.controller;
 
 import findAnyCat.cat.embbed.Address;
 import findAnyCat.cat.member.Member;
-import findAnyCat.cat.member.controller.request.MemberJoinRequest;
+import findAnyCat.cat.member.service.request.MemberJoinRequest;
 import findAnyCat.cat.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

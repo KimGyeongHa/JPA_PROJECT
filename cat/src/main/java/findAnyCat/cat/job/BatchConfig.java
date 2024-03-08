@@ -1,6 +1,7 @@
 package findAnyCat.cat.job;
 
 
+import findAnyCat.cat.job.validator.Validating;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -26,11 +27,11 @@ public class BatchConfig {
     public Job orderJob(JobRepository jobRepository,Step oredrStep){
         return new JobBuilder("orderJob",jobRepository)
                 .start(oredrStep)
+                .validator(new Validating())
                 .build();
     }
 
     @Bean
-    @Primary
     public Step oredrStep(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager){
         return new StepBuilder("orderStep",jobRepository)
                 .tasklet(orderTasklet(),platformTransactionManager)

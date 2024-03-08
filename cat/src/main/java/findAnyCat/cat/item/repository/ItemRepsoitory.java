@@ -3,8 +3,10 @@ package findAnyCat.cat.item.repository;
 
 import findAnyCat.cat.item.Item;
 import findAnyCat.cat.item.associate.Book;
-import findAnyCat.cat.item.controller.request.ItemJoinRequest;
+import findAnyCat.cat.item.service.request.ItemJoinRequest;
 import jakarta.persistence.EntityManager;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,18 +21,6 @@ public class ItemRepsoitory {
     public void addItem(Item item){
         if(item.getId() == null) em.persist(item);
         else em.merge(item);
-    }
-
-    public Long addItemToBuilder(ItemJoinRequest itemJoinRequest){
-        Item item = Book.bookBuilder().name(itemJoinRequest.name())
-                .stcokQuantity(itemJoinRequest.stockQuantity())
-                .price(itemJoinRequest.price())
-                .artist(itemJoinRequest.author())
-                .etc(itemJoinRequest.isbn()).build();
-        if(item.getId() == null) em.persist(item);
-        else em.merge(item);
-
-        return item.getId();
     }
 
     public Item findOne(Long id){

@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item {
 
     @Id @GeneratedValue
@@ -49,8 +50,6 @@ public class Item {
 
         this.stcokQuantity = resetStock;
     }
-
-    protected Item() {}
 
     @Builder
     public Item(String name, int price, int stcokQuantity, String artist, String etc) {
