@@ -7,6 +7,7 @@ import findAnyCat.cat.item.repository.ItemRepsoitory;
 import findAnyCat.cat.order.Order;
 import findAnyCat.cat.order.repository.OrderRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -15,6 +16,8 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.*;
+import org.springframework.batch.item.database.JpaPagingItemReader;
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -24,11 +27,13 @@ import java.util.Iterator;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Configuration
 public class ItemBatchConfig {
 
-    private final ItemRepsoitory itemRepsoitory;
     private final ImageRepository imageRepository;
+    private final EntityManagerFactory emf;
+
+
+    private static final int CHUNK_SIZE = 5;
 
 
     @Bean
@@ -41,11 +46,10 @@ public class ItemBatchConfig {
 
 
     @Bean
-    @Primary
-    public Step itmeCopyStep(JobRepository jobRepository,ItemReader itemReader,ItemProcessor toItemProcessor,ItemWriter imageItemWriter,PlatformTransactionManager platformTransactionManager){
+    public Step itmeCopyStep(JobRepository jobRepository,ItemReader getItemListReader,ItemProcessor toItemProcessor,ItemWriter imageItemWriter,PlatformTransactionManager platformTransactionManager){
         return new StepBuilder("itmeCopyStep",jobRepository)
-                .<Item,Image>chunk(5,platformTransactionManager)
-                .reader(itemReader)
+                .<Item,Image>chunk(CHUNK_SIZE,platformTransactionManager)
+                .reader(getItemListReader)
                 .processor(toItemProcessor)
                 .writer(imageItemWriter)
                 .build();
@@ -53,14 +57,13 @@ public class ItemBatchConfig {
 
 
     @Bean
-    public ItemReader<Item> itemReader(){
-        return new ItemReader<Item>() {
-            @Override
-            public Item read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-                Iterator<Item> items =  itemRepsoitory.findAll().iterator();
-                return items.hasNext() ? items.next() : null;
-            }
-        };
+    public JpaPagingItemReader<Item> getItemListReader(){
+        return new JpaPagingItemReaderBuilder<Item>()
+                .queryString("select m from Item m")
+                .pageSize(CHUNK_SIZE)
+                .entityManagerFactory(emf)
+                .name("getItemList")
+                .build();
     }
 
     @Bean

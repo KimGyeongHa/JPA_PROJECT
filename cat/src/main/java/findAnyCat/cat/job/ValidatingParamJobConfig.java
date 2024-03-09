@@ -19,7 +19,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.Arrays;
 
-@Configuration
 public class ValidatingParamJobConfig {
 
     @Bean

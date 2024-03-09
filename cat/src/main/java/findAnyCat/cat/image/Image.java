@@ -24,7 +24,6 @@ public class Image {
     private String imageName;
 
     public Image(Item item) {
-        this.id = item.getId();
         this.imageName = item.getName();
         this.getDate = new Date();
     }
