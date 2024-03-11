@@ -6,6 +6,8 @@ import findAnyCat.cat.job.validator.Validating;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.configuration.annotation.JobScope;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.CompositeJobParametersValidator;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
@@ -13,16 +15,19 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.Arrays;
 
+@Configuration
 public class ValidatingParamJobConfig {
 
     @Bean
-    public Job validatingParamJob(JobRepository jobRepository,Step oredrStep){
+    public Job validatingParamJob(JobRepository jobRepository,
+                                  @Qualifier(value = "validatingParamStep") Step oredrStep){
         return new JobBuilder("validatingParamJob",jobRepository)
                 .start(oredrStep)
                 .listener(new JobLoggerListener())
@@ -41,13 +46,17 @@ public class ValidatingParamJobConfig {
 
 
     @Bean
-    public Step validatingParamStep(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager){
+    @JobScope
+    @Qualifier(value = "validatingParamStep")
+    public Step validatingParamStep(JobRepository jobRepository,
+                                    PlatformTransactionManager platformTransactionManager){
         return new StepBuilder("validatingParamStep",jobRepository)
                 .tasklet(validatingParamTasklet(),platformTransactionManager)
                 .build();
     }
 
     @Bean
+    @StepScope
     public Tasklet validatingParamTasklet(){
         return new Tasklet() {
             @Override

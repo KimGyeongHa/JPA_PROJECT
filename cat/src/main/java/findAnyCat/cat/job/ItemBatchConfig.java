@@ -11,6 +11,8 @@ import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.JobScope;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
@@ -18,6 +20,7 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.*;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -27,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Configuration
 public class ItemBatchConfig {
 
     private final ImageRepository imageRepository;
@@ -37,7 +41,8 @@ public class ItemBatchConfig {
 
 
     @Bean
-    public Job itemBatch(JobRepository jobRepository,Step itmeCopyStep){
+    public Job itemBatch(JobRepository jobRepository,
+                         @Qualifier(value = "itemCopyStep") Step itmeCopyStep){
         return new JobBuilder("itemBatch",jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .start(itmeCopyStep)
@@ -46,8 +51,14 @@ public class ItemBatchConfig {
 
 
     @Bean
-    public Step itmeCopyStep(JobRepository jobRepository,ItemReader getItemListReader,ItemProcessor toItemProcessor,ItemWriter imageItemWriter,PlatformTransactionManager platformTransactionManager){
-        return new StepBuilder("itmeCopyStep",jobRepository)
+    @JobScope
+    @Qualifier(value = "itemCopyStep")
+    public Step itemCopyStep(JobRepository jobRepository,
+                             @Qualifier(value = "getItemListReader") ItemReader getItemListReader,
+                             ItemProcessor toItemProcessor,
+                             ItemWriter imageItemWriter,
+                             PlatformTransactionManager platformTransactionManager){
+        return new StepBuilder("itemCopyStep",jobRepository)
                 .<Item,Image>chunk(CHUNK_SIZE,platformTransactionManager)
                 .reader(getItemListReader)
                 .processor(toItemProcessor)
@@ -57,6 +68,8 @@ public class ItemBatchConfig {
 
 
     @Bean
+    @StepScope
+    @Qualifier(value = "getItemListReader")
     public JpaPagingItemReader<Item> getItemListReader(){
         return new JpaPagingItemReaderBuilder<Item>()
                 .queryString("select m from Item m")
@@ -67,6 +80,7 @@ public class ItemBatchConfig {
     }
 
     @Bean
+    @StepScope
     public ItemProcessor<Item,Image> toItemProcessor(){
         return new ItemProcessor<Item, Image>() {
             @Override
@@ -77,6 +91,7 @@ public class ItemBatchConfig {
     }
 
     @Bean
+    @StepScope
     public ItemWriter<Image> imageItemWriter(){
         return new ItemWriter<Image>() {
             @Override
