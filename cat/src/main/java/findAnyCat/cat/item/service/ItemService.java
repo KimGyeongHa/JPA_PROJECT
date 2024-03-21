@@ -3,8 +3,9 @@ package findAnyCat.cat.item.service;
 
 import findAnyCat.cat.item.Item;
 import findAnyCat.cat.item.associate.Book;
-import findAnyCat.cat.item.service.request.ItemJoinRequest;
+import findAnyCat.cat.item.controller.request.ItemJoinRequest;
 import findAnyCat.cat.item.repository.ItemRepsoitory;
+import findAnyCat.cat.item.service.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +26,12 @@ public class ItemService {
     }
 
     @Transactional
-    public void saveItemToBuilder(ItemJoinRequest itemJoinRequest){
-        Item item = Book.bookBuilder().name(itemJoinRequest.name())
-                .stcokQuantity(itemJoinRequest.stockQuantity())
-                .price(itemJoinRequest.price())
-                .artist(itemJoinRequest.author())
-                .etc(itemJoinRequest.isbn()).build();
+    public void saveItemToBuilder(ItemDTO itemDTO){
+        Item item = Book.bookBuilder().name(itemDTO.name())
+                .stcokQuantity(itemDTO.stockQuantity())
+                .price(itemDTO.price())
+                .artist(itemDTO.author())
+                .etc(itemDTO.isbn()).build();
         itemRepsoitory.addItem(item);
     }
 
