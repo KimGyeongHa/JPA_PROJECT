@@ -3,7 +3,6 @@ package findAnyCat.cat.item.repository;
 
 import findAnyCat.cat.item.Item;
 import findAnyCat.cat.item.associate.Book;
-import findAnyCat.cat.item.service.request.ItemJoinRequest;
 import jakarta.persistence.EntityManager;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
