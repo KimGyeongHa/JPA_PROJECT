@@ -6,6 +6,7 @@ import org.springframework.batch.item.file.transform.FieldSet;
 public class FileDataSetMapper implements FieldSetMapper<FileData> {
 
     public FileData mapFieldSet(FieldSet fieldSet) {
+
         return FileData.builder()
                 .id(fieldSet.readString(0))
                 .lastName(fieldSet.readString(1))

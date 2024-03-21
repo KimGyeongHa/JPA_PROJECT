@@ -5,24 +5,30 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FileData {
+public class FileData implements Serializable {
     private String ID;
     private String lastName;
     private String firstName;
     private String position;
     private int birthYear;
     private int debutYear;
-    private int yearsExperience;
 
     @Builder
-    public FileData(String id,String lastName, String firstName, String position, int birthYear, int debutYear, int yearsExperience) {
+    public FileData(String id
+                    ,String lastName
+                    , String firstName
+                    , String position
+                    , int birthYear
+                    , int debutYear
+                    ) {
         this.ID = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.position = position;
         this.birthYear = birthYear;
         this.debutYear = debutYear;
-        this.yearsExperience = yearsExperience;
     }
 }
