@@ -36,9 +36,7 @@ public class ItemBatchConfig {
     private final ImageRepository imageRepository;
     private final EntityManagerFactory emf;
 
-
     private static final int CHUNK_SIZE = 5;
-
 
     @Bean
     public Job itemBatch(JobRepository jobRepository,
@@ -48,7 +46,6 @@ public class ItemBatchConfig {
                 .start(itmeCopyStep)
                 .build();
     }
-
 
     @Bean
     @JobScope
@@ -65,7 +62,6 @@ public class ItemBatchConfig {
                 .writer(imageItemWriter)
                 .build();
     }
-
 
     @Bean
     @StepScope
