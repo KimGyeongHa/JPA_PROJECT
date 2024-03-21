@@ -2,10 +2,7 @@ package findAnyCat.cat.item.repository;
 
 
 import findAnyCat.cat.item.Item;
-import findAnyCat.cat.item.associate.Book;
 import jakarta.persistence.EntityManager;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,9 +27,9 @@ public class ItemRepsoitory {
         return em.createQuery("select i from Item i",Item.class).getResultList();
     }
 
-    public List<Item> findItemListByName(String name){
-        return em.createQuery("select i from Item i where name:=itemName")
-                .setParameter("itemName",name).getResultList();
+    public List<Item> findItemListById(String id){
+        return em.createQuery("select i from Item i where id:=itemId")
+                .setParameter("itemId",id).getResultList();
     }
 
 

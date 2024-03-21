@@ -17,6 +17,6 @@ spring:
     jdbc:
       initialize-schema: ALWAYS
 
-##logging.level:
-  ##sql: trace
+logging.level:
+  sql: trace
 

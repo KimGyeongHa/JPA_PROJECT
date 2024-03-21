@@ -42,7 +42,7 @@ public class OrderTest {
         Long order_id = orderService.save(memberRepository.saveMember(member), item.getId(), 5);
 
         Assertions.assertEquals(orderRepository.findOne(order_id).getStatus(),OrderStatus.ORDER);
-        Assertions.assertEquals(item.getStcokQuantity(),5);
+        Assertions.assertEquals(item.getStockQuantity(),5);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class OrderTest {
 
         order.cancleOrder();
 
-        Assertions.assertEquals(item.getStcokQuantity(),10);
+        Assertions.assertEquals(item.getStockQuantity(),10);
         Assertions.assertEquals(order.getStatus(),OrderStatus.CANCLE);
     }
 

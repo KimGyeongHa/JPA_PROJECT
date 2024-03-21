@@ -2,6 +2,7 @@ package findAnyCat.cat.item.service;
 
 
 import findAnyCat.cat.item.Item;
+import findAnyCat.cat.item.associate.Album;
 import findAnyCat.cat.item.associate.Book;
 import findAnyCat.cat.item.controller.request.ItemJoinRequest;
 import findAnyCat.cat.item.repository.ItemRepsoitory;
@@ -27,8 +28,8 @@ public class ItemService {
 
     @Transactional
     public void saveItemToBuilder(ItemDTO itemDTO){
-        Item item = Book.bookBuilder().name(itemDTO.name())
-                .stcokQuantity(itemDTO.stockQuantity())
+        Item item = Album.albumBuilder().name(itemDTO.name())
+                .stockQuantity(itemDTO.stockQuantity())
                 .price(itemDTO.price())
                 .artist(itemDTO.author())
                 .etc(itemDTO.isbn()).build();

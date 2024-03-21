@@ -27,7 +27,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class FileDataReaderConfing {
 
-    //private static final int CHUNCK_SIZE = 5;
+    private static final int CHUNCK_SIZE = 5;
 
     @Bean
     public Job fileDataReadJob(JobRepository jobRepository,
@@ -44,7 +44,7 @@ public class FileDataReaderConfing {
                                  @Qualifier(value = "flatFileDataReader") ItemReader flatFileDataReader,
                                  PlatformTransactionManager platformTransactionManager){
         return new StepBuilder("fileDataReadStep",jobRepository)
-                .<FileData,FileData>chunk(5,platformTransactionManager)
+                .<FileData,FileData>chunk(CHUNCK_SIZE,platformTransactionManager)
                 .reader(flatFileDataReader)
                 .writer(chunk -> {
                     chunk.getItems().stream().forEach(item -> System.out.println("FILE DATA READER : " + item));

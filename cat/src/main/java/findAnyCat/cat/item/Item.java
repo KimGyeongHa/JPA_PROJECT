@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item {
 
@@ -21,7 +21,7 @@ public class Item {
 
     private String name;
     private int price;
-    private int stcokQuantity;
+    private int stockQuantity;
     private String artist;
     private String etc;
 
@@ -33,29 +33,29 @@ public class Item {
 
     /**
      * 상품수량증가
-     * @param stcokQuantity
+     * @param stockQuantity
      */
-    public void addStcokQuantity(int stcokQuantity){
-        this.stcokQuantity += stcokQuantity;
+    public void addStcokQuantity(int stockQuantity){
+        this.stockQuantity += stockQuantity;
     }
 
     /**
      * 상품수량감소
-     * @param stcokQuantity
+     * @param stockQuantity
      */
-    public void minusStcokQuantity(int stcokQuantity){
-        int resetStock = this.stcokQuantity - stcokQuantity;
+    public void minusStcokQuantity(int stockQuantity){
+        int resetStock = this.stockQuantity - stockQuantity;
         if(resetStock < 0)
             throw new NoEnoughStcokException("등록 된 상품의 수량보다 더 많은 수량을 주문하셨습니다.");
 
-        this.stcokQuantity = resetStock;
+        this.stockQuantity = resetStock;
     }
 
     @Builder
-    public Item(String name, int price, int stcokQuantity, String artist, String etc) {
+    public Item(String name, int price, int stockQuantity, String artist, String etc) {
         this.name = name;
         this.price = price;
-        this.stcokQuantity = stcokQuantity;
+        this.stockQuantity = stockQuantity;
         this.artist = artist;
         this.etc = etc;
     }
