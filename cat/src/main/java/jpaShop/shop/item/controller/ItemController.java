@@ -39,8 +39,8 @@ public class ItemController {
                 itemJoinRequest.name()
                 ,itemJoinRequest.price()
                 ,itemJoinRequest.stockQuantity()
-                ,itemJoinRequest.author()
-                ,itemJoinRequest.isbn()
+                ,itemJoinRequest.artist()
+                ,itemJoinRequest.etc()
         );
         itemService.saveItemToBuilder(itemDTO);
         return "redirect:/";
@@ -62,16 +62,15 @@ public class ItemController {
 
     @PostMapping("/items/{id}/edit")
     public String updateItem(
-            @PathVariable("id")Long id
+            @PathVariable("id")Long itemId
             ,@Valid ItemJoinRequest itemJoinRequest
             ,BindingResult bindingResult
     ){
         if(bindingResult.hasErrors()){
-            return "redirect:/items/" + id + "/edit";
+            return "redirect:/items/" + itemId + "/edit";
         }
 
-
-
+        itemService.updateItem(itemId,itemJoinRequest);
 
         return "redirect:/";
     }

@@ -3,6 +3,7 @@ package jpaShop.shop.item.service;
 
 import jpaShop.shop.item.Item;
 import jpaShop.shop.item.associate.Album;
+import jpaShop.shop.item.controller.request.ItemJoinRequest;
 import jpaShop.shop.item.repository.ItemRepsoitory;
 import jpaShop.shop.item.service.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,11 @@ public class ItemService {
                 .artist(itemDTO.author())
                 .etc(itemDTO.isbn()).build();
         itemRepsoitory.addItem(item);
+    }
+
+    @Transactional
+    public void updateItem(Long itemId,ItemJoinRequest itemJoinRequest){
+        itemRepsoitory.updateItem(itemId, itemJoinRequest);
     }
 
     public Item findItem(Long id){

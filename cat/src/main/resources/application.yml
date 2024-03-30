@@ -14,8 +14,8 @@ spring:
   batch:
     job:
       name: ${job.name:NONE}
-    jdbc:
-      initialize-schema: ALWAYS
+    #jdbc:
+      #initialize-schema: ALWAYS
 
 logging.level:
   sql: trace

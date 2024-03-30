@@ -3,6 +3,7 @@ package jpaShop.shop.item.repository;
 
 import jpaShop.shop.item.Item;
 import jakarta.persistence.EntityManager;
+import jpaShop.shop.item.controller.request.ItemJoinRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +16,12 @@ public class ItemRepsoitory {
     private final EntityManager em;
 
     public void addItem(Item item){
-        if(item.getId() == null) em.persist(item);
-        else em.merge(item);
+        em.persist(item);
+    }
+
+    public void updateItem(Long itemId,ItemJoinRequest itemJoinRequest){
+        Item findItem = em.find(Item.class,itemId);
+        findItem.updateItem(itemJoinRequest);
     }
 
     public Item findOne(Long id){

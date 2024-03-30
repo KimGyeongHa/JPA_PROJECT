@@ -6,19 +6,17 @@ import jpaShop.shop.orderItem.OrderItem;
 import jpaShop.shop.status.DeliveryStatus;
 import jpaShop.shop.status.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
 
 @Entity(name = "ORDERS")
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
     @Id @GeneratedValue
@@ -41,6 +39,14 @@ public class Order {
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     public void setOrderItems(OrderItem orderItem){
         orderItems.add(orderItem);
         orderItem.setOrder(this);
@@ -50,20 +56,21 @@ public class Order {
      * 상품주문
      * @param member
      * @param delivery
-     * @param orderItems
+     * @param requestOrderItems
      * @return Order
      */
-    public static Order saveOrder(Member member, Delivery delivery, OrderItem... orderItems){
-        Order order = new Order();
-        order.setMember(member);
-        order.setDelivery(delivery);
-        for(OrderItem orderItem : orderItems){
-            order.setOrderItems(orderItem);
-        }
-        order.setDate(LocalDate.now());
-        order.setStatus(OrderStatus.ORDER);
+    public static Order saveOrder(Member member, Delivery delivery, OrderItem... requestOrderItems){
+        List<OrderItem> orderItemList = new ArrayList<>();
 
-        return order;
+        if(orderItemList.size() > 0)
+            Arrays.stream(requestOrderItems).toList().forEach(item -> orderItemList.add(item));
+
+        return  Order.builder()
+                .member(member)
+                .delivery(delivery)
+                .date(LocalDate.now())
+                .orderItems(orderItemList)
+                .status(OrderStatus.ORDER).build();
     }
 
     /**
@@ -88,4 +95,12 @@ public class Order {
                 .mapToInt(item -> item.getOrderPrice() * item.getCount()).sum();
     }
 
+    @Builder
+    public Order(LocalDate date, OrderStatus status, Member member, Delivery delivery, List<OrderItem> orderItems) {
+        this.date = date;
+        this.status = status;
+        this.member = member;
+        this.delivery = delivery;
+        this.orderItems = orderItems;
+    }
 }

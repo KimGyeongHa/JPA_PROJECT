@@ -8,16 +8,16 @@ public record ItemJoinRequest(
         @NotBlank(message = "상품명을 입력해주세요.") String name,
         @NotNull(message = "가격을 입력해주세요.") @Positive(message = "양수를 입력해주세요.") int price,
         @NotNull(message = "수량을 입력해주세요.") @Positive(message = "양수를 입력해주세요.") int stockQuantity,
-        String author,
-        String isbn
+        String artist,
+        String etc
 ) {
     public static ItemJoinRequest of(
             String name,
             int price,
             int stockQuantity,
-            String author,
-            String isbn
+            String artist,
+            String etc
     ){
-        return new ItemJoinRequest(name, price, stockQuantity, author, isbn);
+        return new ItemJoinRequest(name, price, stockQuantity, artist, etc);
     }
 }

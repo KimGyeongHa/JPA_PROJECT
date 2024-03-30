@@ -2,6 +2,7 @@ package jpaShop.shop.item;
 
 import jpaShop.shop.category.Category;
 import jpaShop.shop.exception.NoEnoughStcokException;
+import jpaShop.shop.item.controller.request.ItemJoinRequest;
 import jpaShop.shop.orderItem.OrderItem;
 import jakarta.persistence.*;
 import lombok.*;
@@ -49,6 +50,17 @@ public class Item {
             throw new NoEnoughStcokException("등록 된 상품의 수량보다 더 많은 수량을 주문하셨습니다.");
 
         this.stockQuantity = resetStock;
+    }
+
+    /**
+     * 상품수정
+     * @param itemJoinRequest
+     */
+    public void updateItem(ItemJoinRequest itemJoinRequest){
+        this.name = itemJoinRequest.name();
+        this.stockQuantity = itemJoinRequest.stockQuantity();
+        this.artist = itemJoinRequest.artist();
+        this.etc = itemJoinRequest.etc();
     }
 
     @Builder
