@@ -1,4 +1,4 @@
-package jpaShop.shop.exception;
+package jpaShop.shop.item.exception;
 
 public class NoEnoughStcokException extends RuntimeException{
     public NoEnoughStcokException() {

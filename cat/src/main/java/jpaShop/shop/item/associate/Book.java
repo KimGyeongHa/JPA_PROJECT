@@ -11,8 +11,7 @@ import lombok.*;
 @Getter
 public class Book extends Item {
     @Builder(builderMethodName = "bookBuilder")
-    public Book(String name, int price, int stockQuantity, String artist, String etc) {
-        super(name, price, stockQuantity, artist, etc);
+    public Book(String itemName, int price, int stockQuantity, String artist, String etc) {
+        super(itemName, price, stockQuantity, artist, etc);
     }
-
 }

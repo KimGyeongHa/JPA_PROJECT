@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 public class Movie extends Item {
     @Builder(builderMethodName = "movieBuilder")
-    public Movie(String name, int price, int stockQuantity, String author, String etc) {
-        super(name, price, stockQuantity, author, etc);
+    public Movie(String itemName, int price, int stockQuantity, String artist, String etc) {
+        super(itemName, price, stockQuantity, artist, etc);
     }
 }

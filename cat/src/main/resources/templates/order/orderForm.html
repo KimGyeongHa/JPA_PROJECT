@@ -6,7 +6,7 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
-    <form role="form" action="/order" method="post">
+    <form role="form" action="/order" th:object="${orderRequest}" method="post">
 
         <div class="form-group">
             <label for="member">주문회원</label>
@@ -16,6 +16,7 @@
                         th:value="${member.id}"
                         th:text="${member.name}" />
             </select>
+            <p th:if = "${#fields.hasErrors('memberId')}" th:errors="*{memberId}">Incorrect data</p>
         </div>
 
         <div class="form-group">
@@ -24,13 +25,15 @@
                 <option value="">상품선택</option>
                 <option th:each="item : ${items}"
                         th:value="${item.id}"
-                        th:text="${item.name}" />
+                        th:text="${item.itemName}" />
             </select>
+            <p th:if = "${#fields.hasErrors('itemId')}" th:errors="*{itemId}">Incorrect data</p>
         </div>
 
         <div class="form-group">
-            <label for="count">주문수량</label>
-            <input type="number" name="count" class="form-control" id="count" placeholder="주문 수량을 입력하세요">
+            <label for="orderStockQuantity">주문수량</label>
+            <input type="number" name="orderStockQuantity" class="form-control" id="orderStockQuantity" placeholder="주문 수량을 입력하세요" th:class="${#fields.hasErrors('orderStockQuantity')}? 'form-control fieldError' : 'form-control'">
+            <p th:if = "${#fields.hasErrors('orderStockQuantity')}" th:errors="*{orderStockQuantity}">Incorrect data</p>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

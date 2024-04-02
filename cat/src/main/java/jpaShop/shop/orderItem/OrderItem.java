@@ -3,15 +3,12 @@ package jpaShop.shop.orderItem;
 import jpaShop.shop.item.Item;
 import jpaShop.shop.order.Order;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import static jakarta.persistence.FetchType.*;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
@@ -22,12 +19,26 @@ public class OrderItem {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "ORDER_ID")
     private Order order;
+
     private int orderPrice;
+
     private int count;
 
     @ManyToOne
     @JoinColumn(name = "ITEM_ID")
     private Item item;
+
+    @Builder
+    public OrderItem(Order order, int orderPrice, int count, Item item) {
+        this.order = order;
+        this.orderPrice = orderPrice;
+        this.count = count;
+        this.item = item;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     /**
      * 상품주문
@@ -37,14 +48,13 @@ public class OrderItem {
      * @return OrderItem
      */
     public static OrderItem createOrderItem(Item item,int orderPrice,int count){
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-
-        orderItem.setOrderPrice(orderPrice);
-        orderItem.setCount(count);
         item.minusStcokQuantity(count);
 
-        return orderItem;
+        return OrderItem.builder()
+                .item(item)
+                .orderPrice(orderPrice)
+                .count(count)
+                .build();
     }
 
 

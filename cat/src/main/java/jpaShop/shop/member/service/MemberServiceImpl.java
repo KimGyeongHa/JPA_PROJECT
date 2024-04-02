@@ -23,11 +23,13 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    @Transactional
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Member findMember(Long id) {
         return memberRepository.findMember(id);
     }

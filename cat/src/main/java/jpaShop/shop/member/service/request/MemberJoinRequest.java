@@ -1,10 +1,10 @@
 package jpaShop.shop.member.service.request;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public record MemberJoinRequest(
-        @NotEmpty(message = "이름을 입력해주세요.")
-        String name,
+        @NotNull(message = "이름을 입력해주세요.") String memberName,
         String city,
         String zipcode,
         String street

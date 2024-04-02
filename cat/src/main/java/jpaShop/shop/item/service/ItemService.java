@@ -20,8 +20,17 @@ public class ItemService {
     private final ItemRepsoitory itemRepsoitory;
 
     @Transactional
-    public void saveItemToBuilder(ItemDTO itemDTO){
-        Item item = Album.albumBuilder().name(itemDTO.name())
+    public void saveItemToBuilder(ItemJoinRequest itemJoinRequest){
+
+        ItemDTO itemDTO = ItemDTO.of(
+                itemJoinRequest.name()
+                ,itemJoinRequest.price()
+                ,itemJoinRequest.stockQuantity()
+                ,itemJoinRequest.artist()
+                ,itemJoinRequest.etc()
+        );
+
+        Item item = Album.albumBuilder().itemName(itemDTO.name())
                 .stockQuantity(itemDTO.stockQuantity())
                 .price(itemDTO.price())
                 .artist(itemDTO.author())

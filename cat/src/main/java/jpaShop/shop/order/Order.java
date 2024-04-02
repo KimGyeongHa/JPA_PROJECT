@@ -60,17 +60,22 @@ public class Order {
      * @return Order
      */
     public static Order saveOrder(Member member, Delivery delivery, OrderItem... requestOrderItems){
-        List<OrderItem> orderItemList = new ArrayList<>();
-
-        if(orderItemList.size() > 0)
-            Arrays.stream(requestOrderItems).toList().forEach(item -> orderItemList.add(item));
-
-        return  Order.builder()
+        Order order = Order.builder()
                 .member(member)
                 .delivery(delivery)
                 .date(LocalDate.now())
-                .orderItems(orderItemList)
                 .status(OrderStatus.ORDER).build();
+
+        if(requestOrderItems.length > 0)
+            Arrays.stream(requestOrderItems)
+                    .toList()
+                    .forEach(item -> {
+                        order.setOrderItems(item);
+                    });
+
+        delivery.setOrders(order);
+
+        return order;
     }
 
     /**
@@ -96,11 +101,10 @@ public class Order {
     }
 
     @Builder
-    public Order(LocalDate date, OrderStatus status, Member member, Delivery delivery, List<OrderItem> orderItems) {
+    public Order(LocalDate date, OrderStatus status, Member member, Delivery delivery) {
         this.date = date;
         this.status = status;
         this.member = member;
         this.delivery = delivery;
-        this.orderItems = orderItems;
     }
 }

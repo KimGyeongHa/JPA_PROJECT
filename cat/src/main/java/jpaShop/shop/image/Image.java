@@ -22,7 +22,7 @@ public class Image {
     private String imageName;
 
     public Image(Item item) {
-        this.imageName = item.getName();
+        this.imageName = item.getItemName();
         this.getDate = new Date();
     }
 }

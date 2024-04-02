@@ -30,10 +30,10 @@ public class MemberController {
         }
 
         Member member = new Member();
-        member.setName(memberJoinRequest.name());
+        member.setName(memberJoinRequest.memberName());
         member.setAddress(new Address(memberJoinRequest.city(),memberJoinRequest.street(),memberJoinRequest.zipcode()));
         memberService.saveMember(member);
-        return "redirect:/";
+        return "redirect:/members";
     }
 
     @RequestMapping("/members")

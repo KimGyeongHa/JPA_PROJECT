@@ -1,9 +1,9 @@
 package jpaShop.shop;
 
 import jpaShop.shop.embbed.Address;
-import jpaShop.shop.exception.NoEnoughStcokException;
 import jpaShop.shop.item.Item;
 import jpaShop.shop.item.associate.Book;
+import jpaShop.shop.item.exception.NoEnoughStcokException;
 import jpaShop.shop.item.repository.ItemRepsoitory;
 import jpaShop.shop.member.Member;
 import jpaShop.shop.member.repository.MemberRepository;

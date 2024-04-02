@@ -20,8 +20,8 @@ public class ItemRepsoitory {
     }
 
     public void updateItem(Long itemId,ItemJoinRequest itemJoinRequest){
-        Item findItem = em.find(Item.class,itemId);
-        findItem.updateItem(itemJoinRequest);
+        em.find(Item.class,itemId)
+                .updateItem(itemJoinRequest);
     }
 
     public Item findOne(Long id){
@@ -33,7 +33,7 @@ public class ItemRepsoitory {
     }
 
     public List<Item> findItemListById(String id){
-        return em.createQuery("select i from Item i where id:=itemId")
+        return em.createQuery("select i from Item i where id=:itemId")
                 .setParameter("itemId",id).getResultList();
     }
 

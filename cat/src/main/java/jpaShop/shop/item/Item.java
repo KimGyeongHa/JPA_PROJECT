@@ -1,8 +1,8 @@
 package jpaShop.shop.item;
 
 import jpaShop.shop.category.Category;
-import jpaShop.shop.exception.NoEnoughStcokException;
 import jpaShop.shop.item.controller.request.ItemJoinRequest;
+import jpaShop.shop.item.exception.NoEnoughStcokException;
 import jpaShop.shop.orderItem.OrderItem;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +20,7 @@ public class Item {
     @Column(name = "ITEM_ID")
     private Long id;
 
-    private String name;
+    private String itemName;
     private int price;
     private int stockQuantity;
     private String artist;
@@ -57,15 +57,16 @@ public class Item {
      * @param itemJoinRequest
      */
     public void updateItem(ItemJoinRequest itemJoinRequest){
-        this.name = itemJoinRequest.name();
+        this.itemName = itemJoinRequest.name();
         this.stockQuantity = itemJoinRequest.stockQuantity();
         this.artist = itemJoinRequest.artist();
         this.etc = itemJoinRequest.etc();
+        this.price = itemJoinRequest.price();
     }
 
     @Builder
-    public Item(String name, int price, int stockQuantity, String artist, String etc) {
-        this.name = name;
+    public Item(String itemName, int price, int stockQuantity, String artist, String etc) {
+        this.itemName = itemName;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.artist = artist;

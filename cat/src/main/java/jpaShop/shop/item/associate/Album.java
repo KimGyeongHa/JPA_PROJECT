@@ -11,8 +11,7 @@ import lombok.*;
 @Getter
 public class Album extends Item {
     @Builder(builderMethodName = "albumBuilder")
-    public Album(String name, int price, int stockQuantity, String artist, String etc) {
-        super(name, price, stockQuantity, artist, etc);
+    public Album(String itemName, int price, int stockQuantity, String artist, String etc) {
+        super(itemName, price, stockQuantity, artist, etc);
     }
-
 }

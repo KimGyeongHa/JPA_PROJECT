@@ -35,14 +35,7 @@ public class ItemController {
             return "items/createItemForm";
         }
 
-        ItemDTO itemDTO = ItemDTO.of(
-                itemJoinRequest.name()
-                ,itemJoinRequest.price()
-                ,itemJoinRequest.stockQuantity()
-                ,itemJoinRequest.artist()
-                ,itemJoinRequest.etc()
-        );
-        itemService.saveItemToBuilder(itemDTO);
+        itemService.saveItemToBuilder(itemJoinRequest);
         return "redirect:/";
     }
 

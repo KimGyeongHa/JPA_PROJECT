@@ -18,7 +18,7 @@ public class MemberJoin {
     @Autowired private EntityManager em;
 
     @Test
-    void memberJoinLogic(){
+    void memberJoin(){
         Member member = new Member();
         member.setName("김경하");
         Long id = memberService.saveMember(member);
