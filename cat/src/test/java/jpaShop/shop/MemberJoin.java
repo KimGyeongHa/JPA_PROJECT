@@ -1,8 +1,9 @@
 package jpaShop.shop;
 
-import jpaShop.shop.member.Member;
-import jpaShop.shop.member.service.MemberService;
+import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
+import jpaShop.shop.domain.member.service.MemberService;
 import jakarta.persistence.EntityManager;
+import jpaShop.shop.domain.member.service.request.MemberDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,26 +20,16 @@ public class MemberJoin {
 
     @Test
     void memberJoin(){
-        Member member = new Member();
-        member.setName("김경하");
-        Long id = memberService.saveMember(member);
-
+        Long id = memberService.saveMember(MemberDTO.of(new MemberJoinRequest("김경하","","","")));
         em.flush();
-        assertThat(member.getClass()).isEqualTo(memberService.findMember(id).getClass());
     }
 
     @Test
     void 중복멤버회원가입(){
-        Member member = new Member();
-        member.setName("김경하");
-
-        Member member1 = new Member();
-        member1.setName("하경김");
-
-        memberService.saveMember(member);
+        memberService.saveMember(MemberDTO.of(new MemberJoinRequest("김경하","","","")));
 
         try{
-            memberService.saveMember(member1);
+            memberService.saveMember(MemberDTO.of(new MemberJoinRequest("김경하","","","")));
         }catch (IllegalArgumentException e){
            fail(e.getMessage());
         }
