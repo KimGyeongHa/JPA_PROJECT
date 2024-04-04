@@ -1,16 +1,18 @@
 package jpaShop.shop;
 
-import jpaShop.shop.embbed.Address;
-import jpaShop.shop.item.Item;
-import jpaShop.shop.item.associate.Book;
-import jpaShop.shop.item.exception.NoEnoughStcokException;
-import jpaShop.shop.item.repository.ItemRepsoitory;
-import jpaShop.shop.member.Member;
-import jpaShop.shop.member.repository.MemberRepository;
-import jpaShop.shop.order.Order;
-import jpaShop.shop.order.repository.OrderRepository;
-import jpaShop.shop.order.service.OrderService;
-import jpaShop.shop.status.OrderStatus;
+import jpaShop.shop.domain.item.Item;
+import jpaShop.shop.domain.item.associate.Book;
+import jpaShop.shop.domain.item.exception.NoEnoughStcokException;
+import jpaShop.shop.domain.item.repository.ItemRepsoitory;
+import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
+import jpaShop.shop.domain.member.repository.MemberRepository;
+import jpaShop.shop.domain.member.service.request.MemberDTO;
+import jpaShop.shop.domain.order.Order;
+import jpaShop.shop.domain.order.controller.request.OrderRequest;
+import jpaShop.shop.domain.order.repository.OrderRepository;
+import jpaShop.shop.domain.order.service.OrderService;
+import jpaShop.shop.domain.order.service.request.OrderDTO;
+import jpaShop.shop.domain.status.OrderStatus;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,11 +36,11 @@ public class OrderTest {
 
     @Test
     void 주문(){
-        Member member = getMember();
+        MemberDTO memberDTO = getMember();
 
         Item item = getItem(itemRepsoitory);
 
-        Long order_id = orderService.save(memberRepository.saveMember(member), item.getId(), 5);
+        Long order_id = orderService.save(OrderDTO.of(new OrderRequest(memberRepository.saveMember(memberDTO), item.getId(), 5)));
 
         Assertions.assertEquals(orderRepository.findOne(order_id).getStatus(), OrderStatus.ORDER);
         Assertions.assertEquals(item.getStockQuantity(),5);
@@ -46,11 +48,11 @@ public class OrderTest {
 
     @Test
     void 상품취소(){
-        Member member = getMember();
+        MemberDTO memberDTO = getMember();
 
         Item item = getItem(itemRepsoitory);
 
-        Long order_id = orderService.save(memberRepository.saveMember(member), item.getId(), 5);
+        Long order_id = orderService.save(OrderDTO.of(new OrderRequest(memberRepository.saveMember(memberDTO), item.getId(), 5)));
 
         Order order = orderRepository.findOne(order_id);
 
@@ -62,13 +64,12 @@ public class OrderTest {
 
     @Test
     void 상품초과주문() throws Exception{
-        Member member = getMember();
+        MemberDTO memberDTO = getMember();
 
         Item item = getItem(itemRepsoitory);
 
-
         Assertions.assertThrows(NoEnoughStcokException.class
-                ,()->orderService.save(memberRepository.saveMember(member), item.getId(), 15));
+                ,()->orderService.save(OrderDTO.of(new OrderRequest(memberRepository.saveMember(memberDTO), item.getId(), 15))));
     }
 
     private static Item getItem(ItemRepsoitory itemRepsoitory) {
@@ -77,10 +78,7 @@ public class OrderTest {
         return book;
     }
 
-    private static Member getMember() {
-        Member member = new Member();
-        member.setName("김경하");
-        member.setAddress(new Address("경기도","시흥시","888"));
-        return member;
+    private static MemberDTO getMember() {
+        return MemberDTO.of(new MemberJoinRequest("김경하","경기도","시흥시","888"));
     }
 }
