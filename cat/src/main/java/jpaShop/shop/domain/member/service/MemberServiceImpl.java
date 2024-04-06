@@ -5,12 +5,17 @@ import jpaShop.shop.domain.member.service.request.MemberDTO;
 import jpaShop.shop.domain.member.Member;
 import jpaShop.shop.domain.member.repository.MemberRepository;
 import jpaShop.shop.domain.member.service.request.UpdateMemberDTO;
-import jpaShop.shop.domain.member.service.response.MemberJoinResponse;
+import jpaShop.shop.domain.member.service.response.FindMemberResponse;
+import jpaShop.shop.domain.member.service.response.FindMembersResponse;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +33,16 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public List<Member> findMembers() {
-        return memberRepository.findAll();
+    public FindMembersResponse findMembers() {
+        return FindMembersResponse.from(
+                memberRepository.findAll()
+                .stream()
+                .map(item -> FindMemberResponse.of(
+                        item.getAddress().getCity(),
+                        item.getAddress().getStreet(),
+                        item.getAddress().getZipcode(),
+                        item.getMemberName()
+                )).collect(Collectors.toList()));
     }
 
     @Override
@@ -41,9 +54,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public MemberJoinResponse findMember(FindMemberRequest findMemberRequest) {
+    public FindMemberResponse findMember(FindMemberRequest findMemberRequest) {
         Member member = memberRepository.findMember(findMemberRequest.memberId());
-        return MemberJoinResponse.of(
+        return FindMemberResponse.of(
                 member.getAddress().getCity(),
                 member.getAddress().getStreet(),
                 member.getAddress().getZipcode(),
@@ -55,4 +68,5 @@ public class MemberServiceImpl implements MemberService{
         List<Member> findMember = memberRepository.findByName(memberDTO.memberJoinRequest().memberName());
         if(!findMember.isEmpty()) throw new IllegalArgumentException("이미 등록 된 회원입니다.");
     }
+
 }

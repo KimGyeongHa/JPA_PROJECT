@@ -5,15 +5,18 @@ import jakarta.validation.Valid;
 import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
 import jpaShop.shop.domain.member.controller.request.UpdateMemberRequest;
 import jpaShop.shop.domain.member.service.MemberService;
+import jpaShop.shop.domain.member.service.MemberServiceImpl;
 import jpaShop.shop.domain.member.service.request.FindMemberRequest;
 import jpaShop.shop.domain.member.service.request.MemberDTO;
 import jpaShop.shop.domain.member.service.request.UpdateMemberDTO;
-import jpaShop.shop.domain.member.service.response.MemberJoinResponse;
+import jpaShop.shop.domain.member.service.response.FindMemberResponse;
+import jpaShop.shop.domain.member.service.response.FindMembersResponse;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +26,7 @@ public class MemberApiController {
     private final MemberService memberService;
 
     @PostMapping("/join")
-    public ResponseEntity<MemberJoinResponse> memberJoin(
+    public ResponseEntity<FindMemberResponse> memberJoin(
            @Valid @RequestBody MemberJoinRequest memberJoinRequest
     ){
         FindMemberRequest findMemberRequest = FindMemberRequest.of(memberService.saveMember(MemberDTO.of(memberJoinRequest)));
@@ -37,6 +40,12 @@ public class MemberApiController {
     ){
         memberService.updateMember(memberId, UpdateMemberDTO.of(updateMemberRequest));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<FindMembersResponse> findMembers()
+    {
+        return ResponseEntity.ok(memberService.findMembers());
     }
 
 
