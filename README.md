@@ -1,3 +1,3 @@
-## JPA , BATCH 기본학습
+## JPA API 개발
 
 
