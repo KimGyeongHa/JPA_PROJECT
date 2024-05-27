@@ -1,18 +1,18 @@
 package jpaShop.shop.domain.member.service.response;
 
-public record MemberJoinResponse(
+public record FindMemberResponse(
         String city
         ,String street
         ,String zipCode
         ,String memberName
 )
 {
-    public static MemberJoinResponse of(
+    public static FindMemberResponse of(
             String city,
             String street,
             String zipCode,
             String memberName
     ){
-        return new MemberJoinResponse(city, street, zipCode, memberName);
+        return new FindMemberResponse(city, street, zipCode, memberName);
     }
 }

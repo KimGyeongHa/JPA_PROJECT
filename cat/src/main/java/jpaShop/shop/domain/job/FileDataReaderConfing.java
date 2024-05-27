@@ -27,7 +27,7 @@ public class FileDataReaderConfing {
     @Bean
     public Job fileDataReadJob(JobRepository jobRepository,
                                @Qualifier(value = "flatFileDataReadStep") Step flatFileDataReadStep){
-        return new JobBuilder("fileDataReadJob",jobRepository)
+        return new JobBuilder("fileDataReadJob1",jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .start(flatFileDataReadStep)
                 .build();
