@@ -42,17 +42,4 @@ public class MemberApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<FindMembersResponse> findMembers()
-    {
-        return ResponseEntity.ok(memberService.findMembers());
-    }
-
-
-
-
-
-
-
-
 }

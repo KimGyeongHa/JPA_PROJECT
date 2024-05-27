@@ -24,7 +24,7 @@ public class ItemService {
 
         ItemJoinRequest itemJoinRequest = itemDTO.itemJoinRequest();
 
-        Item item = Album.albumBuilder().itemName(itemJoinRequest.name())
+        Item item = Album.albumBuilder().itemName(itemJoinRequest.itemName())
                 .stockQuantity(itemJoinRequest.stockQuantity())
                 .price(itemJoinRequest.price())
                 .artist(itemJoinRequest.artist())
