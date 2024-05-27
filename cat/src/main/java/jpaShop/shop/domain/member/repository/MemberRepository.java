@@ -22,7 +22,13 @@ public class MemberRepository {
         Member member =
                 Member.builder()
                         .memberName(memberJoinRequest.memberName())
-                        .address(new Address(memberJoinRequest.city(),memberJoinRequest.street(),memberJoinRequest.zipcode()))
+                        .address(
+                            new Address(
+                                memberJoinRequest.city()
+                                ,memberJoinRequest.street()
+                                ,memberJoinRequest.zipcode()
+                            )
+                        )
                         .build();
         em.persist(member);
         return member.getId();
