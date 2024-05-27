@@ -66,13 +66,9 @@ public class Order {
                 .date(LocalDate.now())
                 .status(OrderStatus.ORDER).build();
 
-        if(requestOrderItems.length > 0)
-            Arrays.stream(requestOrderItems)
-                    .toList()
-                    .forEach(item -> {
-                        order.setOrderItems(item);
-                    });
-
+        if(requestOrderItems.length > 0) {
+            Arrays.stream(requestOrderItems).forEach(item -> order.setOrderItems(item));
+        }
         delivery.setOrders(order);
 
         return order;
@@ -82,13 +78,12 @@ public class Order {
      * 주문취소
      */
     public void cancleOrder(){
-        if(DeliveryStatus.COMP == delivery.getStatus()) throw new IllegalArgumentException("이미 배송된 상품입니다.");
+        if(DeliveryStatus.COMP == delivery.getStatus()) {
+            throw new IllegalArgumentException("이미 배송된 상품입니다.");
+        }
 
         this.status = OrderStatus.CANCLE;
-
-        for(OrderItem orderItem : orderItems){
-            orderItem.cancle();
-        }
+        orderItems.stream().forEach(orderItem -> orderItem.cancle());
     }
 
     /**

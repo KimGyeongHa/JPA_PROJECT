@@ -1,6 +1,6 @@
-package jpaShop.shop.config.apiException;
+package jpaShop.shop.global.apiException;
 
-import jpaShop.shop.config.apiException.dto.ErrorResponse;
+import jpaShop.shop.global.apiException.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;

@@ -1,4 +1,4 @@
-package jpaShop.shop.config.apiException.dto;
+package jpaShop.shop.global.apiException.dto;
 
 import lombok.Builder;
 

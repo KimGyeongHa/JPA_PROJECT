@@ -57,7 +57,7 @@ public class Item {
      * @param itemJoinRequest
      */
     public void updateItem(ItemJoinRequest itemJoinRequest){
-        this.itemName = itemJoinRequest.name();
+        this.itemName = itemJoinRequest.itemName();
         this.stockQuantity = itemJoinRequest.stockQuantity();
         this.artist = itemJoinRequest.artist();
         this.etc = itemJoinRequest.etc();

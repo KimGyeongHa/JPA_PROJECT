@@ -39,11 +39,4 @@ public class MemberApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-
-
-
-
-
-
 }
