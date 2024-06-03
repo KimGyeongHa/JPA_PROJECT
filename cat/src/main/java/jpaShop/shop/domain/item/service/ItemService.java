@@ -22,7 +22,7 @@ public class ItemService {
     private final ItemRepsoitory itemRepsoitory;
 
     @Transactional
-    public void saveItemToBuilder(ItemDTO itemDTO){
+    public void saveItem(ItemDTO itemDTO){
         ItemJoinRequest itemJoinRequest = itemDTO.itemJoinRequest();
 
         Item item = Album.albumBuilder().itemName(itemJoinRequest.itemName())
@@ -45,7 +45,6 @@ public class ItemService {
     public List<Item> findAllItem(){
         return itemRepsoitory.findAll();
     }
-
 
     public Item findItemByItemId(Long ItemId){
         return itemRepsoitory.findById(ItemId).orElseThrow(()->new NotFoundItemException("존재하지 않는 상품입니다."));

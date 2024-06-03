@@ -9,6 +9,7 @@ import jpaShop.shop.domain.member.Member;
 import jpaShop.shop.domain.member.exception.MemberNotFoundException;
 import jpaShop.shop.domain.member.repository.MemberRepository;
 import jpaShop.shop.domain.order.Order;
+import jpaShop.shop.domain.order.exception.NotFoundOrderException;
 import jpaShop.shop.domain.order.repository.OrderRepository;
 import jpaShop.shop.domain.order.service.request.OrderDTO;
 import jpaShop.shop.domain.order.service.request.OrderSearchRequest;
@@ -46,18 +47,22 @@ public class OrderService {
                 .build();
 
         Order order = Order.saveOrder(member, delivery, orderItem);
+        orderRepository.save(order);
 
-        return orderRepository.save(order);
+        return order.getId();
     }
 
     @Transactional
     public void orderCancle(Long order_id){
-        Order order = orderRepository.findOne(order_id);
-        order.cancleOrder();
+        findOrderById(order_id).cancleOrder();
     }
 
-    public List<Order> getOrderList(OrderSearchRequest orderSearchRequest){
-        return orderRepository.orderList(orderSearchRequest);
+    public List<Order> findBySearchOrder(OrderSearchRequest orderSearchRequest){
+        return orderRepository.findBySearchOrder(orderSearchRequest.memberName(), orderSearchRequest.orderStatus());
+    }
+
+    public Order findOrderById(Long orderId){
+        return orderRepository.findById(orderId).orElseThrow(()-> new NotFoundOrderException("등록 된 상품이 없습니다."));
     }
 
     public Item findItemById(Long userId){
