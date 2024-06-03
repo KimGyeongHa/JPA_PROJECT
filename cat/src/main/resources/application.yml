@@ -9,14 +9,21 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-      format_sql: true
-      show_sql: true
- # batch:
-    #job:
-      #name: ${job.name:NONE}
-    #jdbc:
-      #initialize-schema: ALWAYS
+        default-batch-fetch-size: 100
+        format_sql: true
+        # show_sql: true
+
+# batch:
+# job:
+# name: ${job.name:NONE}
+# jdbc:
+# initialize-schema: ALWAYS
+
+jwt:
+  issuer: "kim"
+  secret-key: ""
+  expire-second: ""
 
 logging.level:
-  sql: trace
-
+  # sql: trace
+  org.hibernate.SQL: debug

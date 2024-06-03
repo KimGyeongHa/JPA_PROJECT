@@ -22,7 +22,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @RequiredArgsConstructor
-@Configuration
 public class ItemBatchConfig {
 
     private final ImageRepository imageRepository;

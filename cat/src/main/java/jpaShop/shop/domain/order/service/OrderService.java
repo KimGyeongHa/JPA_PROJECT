@@ -2,7 +2,9 @@ package jpaShop.shop.domain.order.service;
 
 import jpaShop.shop.domain.delivery.Delivery;
 import jpaShop.shop.domain.item.Item;
+import jpaShop.shop.domain.item.exception.NotFoundItemException;
 import jpaShop.shop.domain.item.repository.ItemRepsoitory;
+import jpaShop.shop.domain.item.service.ItemService;
 import jpaShop.shop.domain.member.Member;
 import jpaShop.shop.domain.member.repository.MemberRepository;
 import jpaShop.shop.domain.order.Order;
@@ -34,7 +36,7 @@ public class OrderService {
     public Long save(OrderDTO orderDTO){
 
         Member member = memberRepository.findMember(orderDTO.orderRequest().memberId());
-        Item item = itemRepsoitory.findOne(orderDTO.orderRequest().memberId());
+        Item item = findItemById(orderDTO.orderRequest().itemId());
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), orderDTO.orderRequest().orderStockQuantity());
 
         Delivery delivery = Delivery.builder()
@@ -58,5 +60,8 @@ public class OrderService {
         return orderRepository.orderList(orderSearchRequest);
     }
 
+    public Item findItemById(Long userId){
+        return itemRepsoitory.findById(userId).orElseThrow(()-> new NotFoundItemException("등록 된 상품이 없습니다."));
+    }
 
 }

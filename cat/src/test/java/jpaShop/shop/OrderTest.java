@@ -20,9 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.fail;
-
 @SpringBootTest
 @Transactional
 public class OrderTest {
@@ -74,7 +71,7 @@ public class OrderTest {
 
     private static Item getItem(ItemRepsoitory itemRepsoitory) {
         Item book = new Book("김영한의 JPA",50000,10,"김영한","개발");
-        itemRepsoitory.addItem(book);
+        itemRepsoitory.save(book);
         return book;
     }
 

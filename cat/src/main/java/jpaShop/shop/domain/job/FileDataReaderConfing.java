@@ -19,7 +19,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 
-@Configuration
 public class FileDataReaderConfing {
 
     private static final int CHUNCK_SIZE = 5;
