@@ -26,7 +26,7 @@ public class OrderController {
     @GetMapping("/order")
     public String orderPage(Model model,OrderRequest orderRequest){
 
-        model.addAttribute("members",memberService.findMembers());
+        model.addAttribute("members",memberService.findAllMembers());
         model.addAttribute("items",itemService.findAllItem());
         model.addAttribute("orderRequest", orderRequest);
         return "order/orderForm";
@@ -39,7 +39,7 @@ public class OrderController {
             Model model){
 
         if (bindingResult.hasErrors()){
-            model.addAttribute("members",memberService.findMembers());
+            model.addAttribute("members",memberService.findAllMembers());
             model.addAttribute("items",itemService.findAllItem());
             return "order/orderForm";
         }

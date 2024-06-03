@@ -6,6 +6,7 @@ import jpaShop.shop.domain.item.exception.NotFoundItemException;
 import jpaShop.shop.domain.item.repository.ItemRepsoitory;
 import jpaShop.shop.domain.item.service.ItemService;
 import jpaShop.shop.domain.member.Member;
+import jpaShop.shop.domain.member.exception.MemberNotFoundException;
 import jpaShop.shop.domain.member.repository.MemberRepository;
 import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.order.repository.OrderRepository;
@@ -35,7 +36,7 @@ public class OrderService {
     @Transactional
     public Long save(OrderDTO orderDTO){
 
-        Member member = memberRepository.findMember(orderDTO.orderRequest().memberId());
+        Member member =findMemberById(orderDTO.orderRequest().memberId());
         Item item = findItemById(orderDTO.orderRequest().itemId());
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), orderDTO.orderRequest().orderStockQuantity());
 
@@ -55,13 +56,17 @@ public class OrderService {
         order.cancleOrder();
     }
 
-    @Transactional
     public List<Order> getOrderList(OrderSearchRequest orderSearchRequest){
         return orderRepository.orderList(orderSearchRequest);
     }
 
     public Item findItemById(Long userId){
         return itemRepsoitory.findById(userId).orElseThrow(()-> new NotFoundItemException("등록 된 상품이 없습니다."));
+    }
+
+    public Member findMemberById(Long memberId){
+        return memberRepository.findById(memberId)
+                .orElseThrow(()-> new MemberNotFoundException("존재하지 않는 회원입니다."));
     }
 
 }

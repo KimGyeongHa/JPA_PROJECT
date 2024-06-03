@@ -1,5 +1,8 @@
 package jpaShop.shop.domain.member.service;
 
+import jpaShop.shop.domain.embbed.Address;
+import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
+import jpaShop.shop.domain.member.exception.MemberNotFoundException;
 import jpaShop.shop.domain.member.service.request.FindMemberRequest;
 import jpaShop.shop.domain.member.service.request.MemberDTO;
 import jpaShop.shop.domain.member.Member;
@@ -28,34 +31,33 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     public Long saveMember(MemberDTO memberDTO) {
         memberJoinValidation(memberDTO);
-        return memberRepository.saveMember(memberDTO);
-    }
 
-    @Override
-    @Transactional
-    public FindMembersResponse findMembers() {
-        return FindMembersResponse.from(
-                memberRepository.findAll()
-                .stream()
-                .map(item -> FindMemberResponse.of(
-                        item.getAddress().getCity(),
-                        item.getAddress().getStreet(),
-                        item.getAddress().getZipcode(),
-                        item.getMemberName()
-                )).collect(Collectors.toList()));
+        MemberJoinRequest memberJoinRequest = memberDTO.memberJoinRequest();
+        Member member =
+                Member.builder()
+                        .memberName(memberJoinRequest.memberName())
+                        .address(
+                                new Address(
+                                        memberJoinRequest.city()
+                                        ,memberJoinRequest.street()
+                                        ,memberJoinRequest.zipcode()
+                                )
+                        )
+                        .build();
+        memberRepository.save(member);
+
+        return member.getId();
     }
 
     @Override
     @Transactional
     public void updateMember(Long memberId, UpdateMemberDTO updateMemberDTO) {
-        Member member = memberRepository.findMember(memberId);
-        member.updateMember(updateMemberDTO);
+        findMemberById(memberId).updateMember(updateMemberDTO);
     }
 
     @Override
-    @Transactional
     public FindMemberResponse findMember(FindMemberRequest findMemberRequest) {
-        Member member = memberRepository.findMember(findMemberRequest.memberId());
+        Member member = findMemberById(findMemberRequest.memberId());
         return FindMemberResponse.of(
                 member.getAddress().getCity(),
                 member.getAddress().getStreet(),
@@ -64,9 +66,27 @@ public class MemberServiceImpl implements MemberService{
         );
     }
 
+    @Override
+    public FindMembersResponse findAllMembers() {
+        return FindMembersResponse.from(
+                memberRepository.findAll()
+                        .stream()
+                        .map(item -> FindMemberResponse.of(
+                                item.getAddress().getCity(),
+                                item.getAddress().getStreet(),
+                                item.getAddress().getZipcode(),
+                                item.getMemberName()
+                        )).collect(Collectors.toList()));
+    }
+
+    public Member findMemberById(Long memberId){
+        return memberRepository.findById(memberId)
+                .orElseThrow(()-> new MemberNotFoundException("존재하지 않는 회원입니다."));
+    }
+
     public void memberJoinValidation(MemberDTO memberDTO){
-        List<Member> findMember = memberRepository.findByName(memberDTO.memberJoinRequest().memberName());
-        if(!findMember.isEmpty()) throw new IllegalArgumentException("이미 등록 된 회원입니다.");
+        memberRepository.findMemberByMemberName(memberDTO.memberJoinRequest().memberName()).
+                orElseThrow(()->new IllegalArgumentException("이미 등록 된 회원입니다."));
     }
 
 }

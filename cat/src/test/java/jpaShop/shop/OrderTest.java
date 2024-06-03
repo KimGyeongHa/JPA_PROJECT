@@ -4,8 +4,10 @@ import jpaShop.shop.domain.item.Item;
 import jpaShop.shop.domain.item.associate.Book;
 import jpaShop.shop.domain.item.exception.NoEnoughStcokException;
 import jpaShop.shop.domain.item.repository.ItemRepsoitory;
+import jpaShop.shop.domain.member.Member;
 import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
 import jpaShop.shop.domain.member.repository.MemberRepository;
+import jpaShop.shop.domain.member.service.MemberService;
 import jpaShop.shop.domain.member.service.request.MemberDTO;
 import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.order.controller.request.OrderRequest;
@@ -25,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderTest {
 
     @Autowired private OrderService orderService;
-    @Autowired private MemberRepository memberRepository;
+    @Autowired private MemberService memberService;
     @Autowired private ItemRepsoitory itemRepsoitory;
     @Autowired private OrderRepository orderRepository;
 
@@ -37,7 +39,7 @@ public class OrderTest {
 
         Item item = getItem(itemRepsoitory);
 
-        Long order_id = orderService.save(OrderDTO.of(new OrderRequest(memberRepository.saveMember(memberDTO), item.getId(), 5)));
+        Long order_id = orderService.save(OrderDTO.of(new OrderRequest(memberService.saveMember(memberDTO), item.getId(), 5)));
 
         Assertions.assertEquals(orderRepository.findOne(order_id).getStatus(), OrderStatus.ORDER);
         Assertions.assertEquals(item.getStockQuantity(),5);
@@ -49,7 +51,7 @@ public class OrderTest {
 
         Item item = getItem(itemRepsoitory);
 
-        Long order_id = orderService.save(OrderDTO.of(new OrderRequest(memberRepository.saveMember(memberDTO), item.getId(), 5)));
+        Long order_id = orderService.save(OrderDTO.of(new OrderRequest(memberService.saveMember(memberDTO), item.getId(), 5)));
 
         Order order = orderRepository.findOne(order_id);
 
@@ -66,7 +68,7 @@ public class OrderTest {
         Item item = getItem(itemRepsoitory);
 
         Assertions.assertThrows(NoEnoughStcokException.class
-                ,()->orderService.save(OrderDTO.of(new OrderRequest(memberRepository.saveMember(memberDTO), item.getId(), 15))));
+                ,()->orderService.save(OrderDTO.of(new OrderRequest(memberService.saveMember(memberDTO), item.getId(), 15))));
     }
 
     private static Item getItem(ItemRepsoitory itemRepsoitory) {
