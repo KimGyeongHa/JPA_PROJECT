@@ -22,7 +22,7 @@ public class ItemService {
     private final ItemRepsoitory itemRepsoitory;
 
     @Transactional
-    public void saveItem(ItemDTO itemDTO){
+    public Long saveItem(ItemDTO itemDTO){
         ItemJoinRequest itemJoinRequest = itemDTO.itemJoinRequest();
 
         Item item = Album.albumBuilder().itemName(itemJoinRequest.itemName())
@@ -30,7 +30,7 @@ public class ItemService {
                 .price(itemJoinRequest.price())
                 .artist(itemJoinRequest.artist())
                 .etc(itemJoinRequest.etc()).build();
-        itemRepsoitory.save(item);
+        return itemRepsoitory.save(item).getId();
     }
 
     @Transactional

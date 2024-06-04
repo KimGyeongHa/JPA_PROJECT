@@ -3,6 +3,7 @@ package jpaShop.shop.domain.member.service;
 import jpaShop.shop.domain.embbed.Address;
 import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
 import jpaShop.shop.domain.member.exception.MemberNotFoundException;
+import jpaShop.shop.domain.member.exception.MemberOverlappingException;
 import jpaShop.shop.domain.member.service.request.FindMemberRequest;
 import jpaShop.shop.domain.member.service.request.MemberDTO;
 import jpaShop.shop.domain.member.Member;
@@ -10,14 +11,9 @@ import jpaShop.shop.domain.member.repository.MemberRepository;
 import jpaShop.shop.domain.member.service.request.UpdateMemberDTO;
 import jpaShop.shop.domain.member.service.response.FindMemberResponse;
 import jpaShop.shop.domain.member.service.response.FindMembersResponse;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,11 +38,8 @@ public class MemberServiceImpl implements MemberService{
                                         ,memberJoinRequest.street()
                                         ,memberJoinRequest.zipcode()
                                 )
-                        )
-                        .build();
-        memberRepository.save(member);
-
-        return member.getId();
+                        ).build();
+        return memberRepository.save(member).getId();
     }
 
     @Override
@@ -85,8 +78,10 @@ public class MemberServiceImpl implements MemberService{
     }
 
     public void memberJoinValidation(MemberDTO memberDTO){
-        memberRepository.findMemberByMemberName(memberDTO.memberJoinRequest().memberName()).
-                orElseThrow(()->new IllegalArgumentException("이미 등록 된 회원입니다."));
+        memberRepository.findMemberByMemberName(memberDTO.memberJoinRequest().memberName())
+                .ifPresent(member -> {
+                    throw new MemberOverlappingException("이미 등록 된 회원입니다.");
+                });
     }
 
 }

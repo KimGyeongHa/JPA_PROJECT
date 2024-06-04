@@ -47,9 +47,8 @@ public class OrderService {
                 .build();
 
         Order order = Order.saveOrder(member, delivery, orderItem);
-        orderRepository.save(order);
 
-        return order.getId();
+        return orderRepository.save(order).getId();
     }
 
     @Transactional

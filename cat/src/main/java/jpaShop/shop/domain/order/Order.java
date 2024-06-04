@@ -15,7 +15,8 @@ import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
 
-@Entity(name = "ORDER")
+@Table(name = "ORDERS")
+@Entity(name = "ORDERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
