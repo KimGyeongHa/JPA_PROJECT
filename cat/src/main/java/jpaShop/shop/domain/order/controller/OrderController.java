@@ -25,8 +25,7 @@ public class OrderController {
     private final OrderService orderService;
     @GetMapping("/order")
     public String orderPage(Model model,OrderRequest orderRequest){
-
-        model.addAttribute("members",memberService.findMembers());
+        model.addAttribute("members",memberService.findAllMembers());
         model.addAttribute("items",itemService.findAllItem());
         model.addAttribute("orderRequest", orderRequest);
         return "order/orderForm";
@@ -39,7 +38,7 @@ public class OrderController {
             Model model){
 
         if (bindingResult.hasErrors()){
-            model.addAttribute("members",memberService.findMembers());
+            model.addAttribute("members",memberService.findAllMembers());
             model.addAttribute("items",itemService.findAllItem());
             return "order/orderForm";
         }
@@ -55,7 +54,7 @@ public class OrderController {
             OrderSearchRequest orderSearchRequest
     ){
 
-        model.addAttribute("orders",orderService.getOrderList(orderSearchRequest));
+        model.addAttribute("orders",orderService.findBySearchOrder(orderSearchRequest));
         model.addAttribute("orderSearch", OrderSearchRequest.of("", OrderStatus.ORDER));
         return "order/orderList";
     }

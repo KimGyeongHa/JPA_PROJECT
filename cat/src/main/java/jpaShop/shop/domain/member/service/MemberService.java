@@ -14,7 +14,7 @@ import java.util.List;
 public interface MemberService {
     Long saveMember(MemberDTO memberDTO);
     FindMemberResponse findMember(FindMemberRequest findMemberRequest);
-    FindMembersResponse findMembers();
+    FindMembersResponse findAllMembers();
     void updateMember(Long memberId, UpdateMemberDTO updateMemberDTO);
 
 }

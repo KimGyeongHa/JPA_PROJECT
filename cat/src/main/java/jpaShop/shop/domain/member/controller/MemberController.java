@@ -34,7 +34,7 @@ public class MemberController {
 
     @RequestMapping("/members")
     public String getMemberList(Model model){
-        model.addAttribute("members",memberService.findMembers());
+        model.addAttribute("members",memberService.findAllMembers());
         return "members/memberList";
     }
 

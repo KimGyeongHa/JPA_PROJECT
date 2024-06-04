@@ -35,7 +35,7 @@ public class ItemController {
             return "items/createItemForm";
         }
 
-        itemService.saveItemToBuilder(ItemDTO.of(itemJoinRequest));
+        itemService.saveItem(ItemDTO.of(itemJoinRequest));
         return "redirect:/";
     }
 
@@ -44,7 +44,6 @@ public class ItemController {
         model.addAttribute("items",itemService.findAllItem());
         return "items/itemList";
     }
-
 
     @GetMapping("/items/{id}/edit")
     public String updatePage(@PathVariable("id") Long id,Model model){
