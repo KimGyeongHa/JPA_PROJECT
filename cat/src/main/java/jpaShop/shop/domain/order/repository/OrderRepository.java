@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
+
     @Query("select o from ORDERS o join fetch o.member m where m.memberName = :memberName and o.status = :orderStatus")
     List<Order> findBySearchOrder(@Param("memberName") String memberName, @Param("orderStatus") OrderStatus orderStatus);
 

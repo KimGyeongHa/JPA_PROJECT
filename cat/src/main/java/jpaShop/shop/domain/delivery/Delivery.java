@@ -5,12 +5,13 @@ import jpaShop.shop.domain.embbed.Address;
 import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.status.DeliveryStatus;
 import jakarta.persistence.*;
+import jpaShop.shop.global.BaseEntity;
 import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Delivery {
+public class Delivery extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "DELIVERY_ID")

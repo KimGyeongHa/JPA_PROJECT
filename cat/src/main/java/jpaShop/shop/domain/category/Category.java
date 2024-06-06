@@ -2,12 +2,13 @@ package jpaShop.shop.domain.category;
 
 import jpaShop.shop.domain.item.Item;
 import jakarta.persistence.*;
+import jpaShop.shop.global.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Category {
+public class Category extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "CATEGORY_ID")

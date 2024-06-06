@@ -3,6 +3,7 @@ package jpaShop.shop.domain.orderItem;
 import jpaShop.shop.domain.item.Item;
 import jpaShop.shop.domain.order.Order;
 import jakarta.persistence.*;
+import jpaShop.shop.global.BaseEntity;
 import lombok.*;
 
 import static jakarta.persistence.FetchType.*;
@@ -10,7 +11,7 @@ import static jakarta.persistence.FetchType.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderItem {
+public class OrderItem extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "ORDERITEM_ID")

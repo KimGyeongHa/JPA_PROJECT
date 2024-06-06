@@ -7,6 +7,7 @@ import jpaShop.shop.domain.member.service.request.UpdateMemberDTO;
 import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.embbed.Address;
 import jakarta.persistence.*;
+import jpaShop.shop.global.BaseEntity;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;

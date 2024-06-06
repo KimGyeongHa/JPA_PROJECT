@@ -5,6 +5,7 @@ import jpaShop.shop.domain.item.controller.request.ItemJoinRequest;
 import jpaShop.shop.domain.item.exception.NoEnoughStcokException;
 import jpaShop.shop.domain.orderItem.OrderItem;
 import jakarta.persistence.*;
+import jpaShop.shop.global.BaseEntity;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item {
+public class Item extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "ITEM_ID")
