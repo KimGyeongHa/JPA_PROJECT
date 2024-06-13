@@ -1,5 +1,7 @@
 package jpaShop.shop.domain.member.service.response;
 
+import jpaShop.shop.domain.member.Member;
+
 public record FindMemberResponse(
         String city
         ,String street
@@ -7,12 +9,12 @@ public record FindMemberResponse(
         ,String memberName
 )
 {
-    public static FindMemberResponse of(
-            String city,
-            String street,
-            String zipCode,
-            String memberName
-    ){
-        return new FindMemberResponse(city, street, zipCode, memberName);
+    public static FindMemberResponse from(Member member){
+        return new FindMemberResponse(
+                member.getAddress().getCity(),
+                member.getAddress().getStreet(),
+                member.getAddress().getZipcode(),
+                member.getMemberName()
+        );
     }
 }
