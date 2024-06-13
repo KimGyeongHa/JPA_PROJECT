@@ -50,26 +50,14 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public FindMemberResponse findMember(FindMemberRequest findMemberRequest) {
-        Member member = findMemberById(findMemberRequest.memberId());
-        return FindMemberResponse.of(
-                member.getAddress().getCity(),
-                member.getAddress().getStreet(),
-                member.getAddress().getZipcode(),
-                member.getMemberName()
+        return FindMemberResponse.from(
+                findMemberById(findMemberRequest.memberId())
         );
     }
 
     @Override
     public FindMembersResponse findAllMembers() {
-        return FindMembersResponse.from(
-                memberRepository.findAll()
-                        .stream()
-                        .map(item -> FindMemberResponse.of(
-                                item.getAddress().getCity(),
-                                item.getAddress().getStreet(),
-                                item.getAddress().getZipcode(),
-                                item.getMemberName()
-                        )).collect(Collectors.toList()));
+        return FindMembersResponse.of(memberRepository.findAll());
     }
 
     public Member findMemberById(Long memberId){

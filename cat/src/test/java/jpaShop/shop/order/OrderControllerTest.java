@@ -11,6 +11,7 @@ import jpaShop.shop.domain.member.service.MemberService;
 import jpaShop.shop.domain.member.service.request.MemberDTO;
 import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.order.controller.request.OrderRequest;
+import jpaShop.shop.domain.order.repository.OrderRepository;
 import jpaShop.shop.domain.order.service.OrderService;
 import jpaShop.shop.domain.order.service.request.OrderDTO;
 import jpaShop.shop.domain.order.service.request.OrderSearchRequest;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,6 +34,7 @@ public class OrderControllerTest {
     @Autowired private OrderService orderService;
     @Autowired private MemberService memberService;
     @Autowired private ItemService itemService;
+    @Autowired private OrderRepository orderRepository;
 
     private Long member_id;
     private Long item_id;
@@ -68,6 +71,7 @@ public class OrderControllerTest {
 
         assertEquals(orderSearchList.size(),1);
     }
+
 
     private static Long getItem(ItemService itemService) {
         Item book = new Book("김영한의 JPA",50000,10,"테스터","개발");

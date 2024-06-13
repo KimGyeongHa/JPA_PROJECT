@@ -2,7 +2,6 @@ package jpaShop.shop.domain.member;
 
 
 import jpaShop.shop.domain.member.controller.request.UpdateMemberRequest;
-import jpaShop.shop.domain.member.service.request.MemberDTO;
 import jpaShop.shop.domain.member.service.request.UpdateMemberDTO;
 import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.embbed.Address;
