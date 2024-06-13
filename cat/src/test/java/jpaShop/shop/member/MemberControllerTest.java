@@ -1,12 +1,14 @@
 package jpaShop.shop.member;
 
-import jpaShop.shop.domain.item.exception.NoEnoughStcokException;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jpaShop.shop.domain.member.Member;
+import jpaShop.shop.domain.member.QMember;
 import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
 import jpaShop.shop.domain.member.exception.MemberOverlappingException;
 import jpaShop.shop.domain.member.service.MemberService;
 import jpaShop.shop.domain.member.service.request.MemberDTO;
-import jpaShop.shop.domain.order.controller.request.OrderRequest;
-import jpaShop.shop.domain.order.service.request.OrderDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import java.util.List;
 
 @SpringBootTest
 @Transactional
