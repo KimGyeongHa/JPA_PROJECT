@@ -51,8 +51,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public FindMemberResponse findMember(FindMemberRequest findMemberRequest) {
         return FindMemberResponse.from(
-                findMemberById(findMemberRequest.memberId())
-        );
+                findMemberById(findMemberRequest.memberId()));
     }
 
     @Override

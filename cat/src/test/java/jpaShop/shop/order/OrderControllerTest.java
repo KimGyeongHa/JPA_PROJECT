@@ -1,5 +1,10 @@
 package jpaShop.shop.order;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jpaShop.shop.domain.item.Item;
 import jpaShop.shop.domain.item.associate.Book;
 import jpaShop.shop.domain.item.controller.request.ItemJoinRequest;
@@ -13,6 +18,7 @@ import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.order.controller.request.OrderRequest;
 import jpaShop.shop.domain.order.repository.OrderRepository;
 import jpaShop.shop.domain.order.service.OrderService;
+import jpaShop.shop.domain.order.service.reponse.OrderSearchResponse;
 import jpaShop.shop.domain.order.service.request.OrderDTO;
 import jpaShop.shop.domain.order.service.request.OrderSearchRequest;
 import jpaShop.shop.domain.status.OrderStatus;
@@ -25,6 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Iterator;
 import java.util.List;
 
+import static jpaShop.shop.domain.member.QMember.member;
+import static jpaShop.shop.domain.order.QOrder.order;
+import static jpaShop.shop.domain.orderItem.QOrderItem.orderItem;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -36,12 +45,19 @@ public class OrderControllerTest {
     @Autowired private ItemService itemService;
     @Autowired private OrderRepository orderRepository;
 
+    @PersistenceContext
+    private EntityManager em;
+
+    private JPAQueryFactory jpaQueryFactory;
+
+
     private Long member_id;
     private Long item_id;
     @BeforeEach
     void init(){
         member_id = getMember(memberService);
         item_id = getItem(itemService);
+        jpaQueryFactory = new JPAQueryFactory(em);
     }
 
     @Test
@@ -67,9 +83,37 @@ public class OrderControllerTest {
     void 상품검색조회(){
         orderService.save(OrderDTO.of(new OrderRequest(member_id,  item_id, 5)));
 
-        List<Order> orderSearchList = orderService.findBySearchOrder(OrderSearchRequest.of("테스터", OrderStatus.ORDER));
+        List<OrderSearchResponse> orderSearchList = orderService.findBySearchOrder(OrderSearchRequest.of("테스터", OrderStatus.ORDER));
 
         assertEquals(orderSearchList.size(),1);
+    }
+
+
+    @Test
+    void 프로젝션조회(){
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        booleanBuilder.and(member.memberName.eq("김경하"));
+        booleanBuilder.and(order.status.eq(OrderStatus.ORDER));
+
+        List<OrderSearchResponse> orderSearchResponses = jpaQueryFactory
+                .select(Projections.constructor(
+                        OrderSearchResponse.class,
+                        order.id,
+                        member.memberName,
+                        orderItem.item.itemName,
+                        orderItem.orderPrice,
+                        orderItem.count,
+                        order.status,
+                        order.date
+                ))
+                .from(order)
+                .join(order.orderItems, orderItem)
+                .join(order.member,member)
+                .where(booleanBuilder)
+                .fetch();
+
     }
 
 

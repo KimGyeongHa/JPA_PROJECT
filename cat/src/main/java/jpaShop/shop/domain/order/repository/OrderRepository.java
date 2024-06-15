@@ -1,5 +1,7 @@
 package jpaShop.shop.domain.order.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jpaShop.shop.domain.order.Order;
 import jpaShop.shop.domain.status.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;

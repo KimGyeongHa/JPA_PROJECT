@@ -13,7 +13,7 @@
             <select name="memberId" id="member" class="form-control">
                 <option value="">회원선택</option>
                 <option th:each="member : ${members}"
-                        th:value="${member.id}"
+                        th:value="${member.memberId}"
                         th:text="${member.memberName}" />
             </select>
             <p th:if = "${#fields.hasErrors('memberId')}" th:errors="*{memberId}">Incorrect data</p>

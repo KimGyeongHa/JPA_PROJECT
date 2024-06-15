@@ -3,6 +3,8 @@ package jpaShop.shop.domain.order.controller;
 import jakarta.validation.Valid;
 import jpaShop.shop.domain.item.service.ItemService;
 import jpaShop.shop.domain.member.service.MemberService;
+import jpaShop.shop.domain.member.service.response.FindMemberResponse;
+import jpaShop.shop.domain.member.service.response.FindMembersResponse;
 import jpaShop.shop.domain.order.controller.request.OrderRequest;
 import jpaShop.shop.domain.order.service.OrderService;
 import jpaShop.shop.domain.order.service.request.OrderDTO;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
@@ -25,7 +29,7 @@ public class OrderController {
     private final OrderService orderService;
     @GetMapping("/order")
     public String orderPage(Model model,OrderRequest orderRequest){
-        model.addAttribute("members",memberService.findAllMembers());
+        model.addAttribute("members",memberService.findAllMembers().findMemberResponseList());
         model.addAttribute("items",itemService.findAllItem());
         model.addAttribute("orderRequest", orderRequest);
         return "order/orderForm";
@@ -38,7 +42,7 @@ public class OrderController {
             Model model){
 
         if (bindingResult.hasErrors()){
-            model.addAttribute("members",memberService.findAllMembers());
+            model.addAttribute("members",memberService.findAllMembers().findMemberResponseList());
             model.addAttribute("items",itemService.findAllItem());
             return "order/orderForm";
         }

@@ -4,11 +4,14 @@ import jakarta.validation.Valid;
 import jpaShop.shop.domain.member.controller.request.MemberJoinRequest;
 import jpaShop.shop.domain.member.service.MemberService;
 import jpaShop.shop.domain.member.service.request.MemberDTO;
+import jpaShop.shop.domain.member.service.response.FindMemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,7 +37,7 @@ public class MemberController {
 
     @RequestMapping("/members")
     public String getMemberList(Model model){
-        model.addAttribute("members",memberService.findAllMembers());
+        model.addAttribute("members",memberService.findAllMembers().findMemberResponseList());
         return "members/memberList";
     }
 
