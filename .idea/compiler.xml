@@ -5,18 +5,27 @@
       <profile default="true" name="Default" enabled="true" />
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
+          <entry name="$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="jpaShop.cat.main" />
+        <module name="JPA_PROJECT.batch.main" />
+        <module name="JPA_PROJECT.domain.main" />
+        <module name="JPA_PROJECT.web.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17">
+      <module name="cat" target="17" />
       <module name="cat.cat.main" target="17" />
       <module name="cat.cat.test" target="17" />
+      <module name="cat.main" target="17" />
+      <module name="cat.test" target="17" />
       <module name="findAnyCat.cat" target="17" />
       <module name="findAnyCat.cat.main" target="17" />
       <module name="findAnyCat.cat.test" target="17" />
+      <module name="jpaShop.domain" target="17" />
+      <module name="jpaShop.domain.main" target="17" />
+      <module name="jpaShop.domain.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

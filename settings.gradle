@@ -1,0 +1,5 @@
+rootProject.name = 'JPA_PROJECT'
+include 'domain'
+include 'batch'
+include 'web'
+
