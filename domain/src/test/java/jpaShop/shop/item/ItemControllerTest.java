@@ -1,8 +1,8 @@
 package jpaShop.shop.item;
 
-import jpaShop.shop.domain.item.Item;
-import jpaShop.shop.domain.item.associate.Book;
-import jpaShop.shop.domain.item.repository.ItemRepsoitory;
+import com.shop.domain.provide.domain.item.Item;
+import com.shop.domain.provide.domain.item.associate.Book;
+import com.shop.domain.provide.domain.item.repository.ItemRepsoitory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

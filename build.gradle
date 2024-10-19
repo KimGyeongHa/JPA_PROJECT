@@ -5,7 +5,7 @@ plugins {
 }
 
 allprojects{
-	group = 'jpaShop'
+	group = 'com.shop'
 	version = '0.0.1-SNAPSHOT'
 }
 
@@ -43,8 +43,20 @@ subprojects {
 		runtimeOnly 'com.h2database:h2'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	}
+
 }
 
+project(':web') {
+	dependencies {
+		implementation project(':domain')
+	}
+}
+
+project(':batch') {
+	dependencies {
+		implementation project(':domain')
+	}
+}
 
 
 
