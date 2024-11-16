@@ -1,4 +1,4 @@
-package com.shop.domain.provide.domain.job.listener;
+package com.shop.batch.job.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.BatchStatus;

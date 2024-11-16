@@ -1,35 +1,21 @@
-package com.shop.web.schedule.util.job;
+package com.shop.batch.schedule.util.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Component("messageSchedule")
-public class MessageScheduled {
+public class Scheduled {
 
     public void scheduleStart() {
         try {
             Scheduler scheduled = StdSchedulerFactory.getDefaultScheduler();
 
             JobDetail jobDetail = JobBuilder
-                    .newJob(MessageJob.class)
-                    .withIdentity("messageJob")
+                    .newJob(BatchJobToQuartz.class)
+                    .withIdentity("batchJob")
                     .usingJobData("sender", "sender")
                     .build();
-
-            List<Map<String, Object>> jobList = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
-                Map<String, Object> jobMap = new HashMap<>();
-                jobMap.put("message", "안녕하세요" + i);
-                jobList.add(jobMap);
-            }
-
-            jobDetail.getJobDataMap().put("message", jobList);
 
             Trigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity("jobTrigger", "message")

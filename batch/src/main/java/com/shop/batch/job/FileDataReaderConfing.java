@@ -1,7 +1,7 @@
-package com.shop.domain.provide.domain.job;
+package com.shop.batch.job;
 
-import com.shop.domain.provide.domain.job.file.FileData;
-import com.shop.domain.provide.domain.job.file.FileDataSetMapper;
+import com.shop.batch.job.file.FileData;
+import com.shop.batch.job.file.FileDataSetMapper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -37,7 +37,7 @@ public class FileDataReaderConfing {
                                  @Qualifier(value = "flatFileDataReader") ItemReader flatFileDataReader,
                                  PlatformTransactionManager platformTransactionManager){
         return new StepBuilder("fileDataReadStep",jobRepository)
-                .<FileData,FileData>chunk(CHUNCK_SIZE,platformTransactionManager)
+                .<FileData, FileData>chunk(CHUNCK_SIZE,platformTransactionManager)
                 .reader(flatFileDataReader)
                 .writer(chunk -> {
                     chunk.getItems().stream().forEach(item -> System.out.println("FILE DATA READER : " + item));

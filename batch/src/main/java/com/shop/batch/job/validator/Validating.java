@@ -1,4 +1,4 @@
-package com.shop.domain.provide.domain.job.validator;
+package com.shop.batch.job.validator;
 
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;

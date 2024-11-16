@@ -1,16 +1,15 @@
-package com.shop.web.schedule.service;
+package com.shop.batch.schedule.service;
 
 
-import com.shop.web.schedule.util.job.MessageScheduled;
+import com.shop.batch.schedule.util.quartz.Scheduled;
 import lombok.RequiredArgsConstructor;
-import org.quartz.SchedulerException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
 
-    private final MessageScheduled scheduled;
+    private final Scheduled scheduled;
 
     public void start()  {
         scheduled.scheduleStart();

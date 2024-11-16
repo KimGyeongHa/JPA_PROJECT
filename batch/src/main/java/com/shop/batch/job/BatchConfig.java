@@ -1,10 +1,11 @@
-package com.shop.domain.provide.domain.job;
+package com.shop.batch.job;
 
 
-import com.shop.domain.provide.domain.job.validator.Validating;
+import com.shop.batch.job.validator.Validating;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -14,12 +15,12 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 
+@Component("batchConfig")
 public class BatchConfig {
 
-    @Bean
     public Job orderJob(JobRepository jobRepository,
                         @Qualifier(value = "orderStep") Step orderStep){
         return new JobBuilder("orderJob",jobRepository)
@@ -28,7 +29,6 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
     @Qualifier(value = "orderStep")
     @JobScope
     public Step oredrStep(JobRepository jobRepository,
@@ -38,7 +38,6 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
     @StepScope
     public Tasklet orderTasklet(){
         return new Tasklet() {

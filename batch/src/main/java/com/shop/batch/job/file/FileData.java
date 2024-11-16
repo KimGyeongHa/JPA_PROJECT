@@ -1,4 +1,4 @@
-package com.shop.domain.provide.domain.job.file;
+package com.shop.batch.job.file;
 
 
 import lombok.AccessLevel;

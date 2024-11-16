@@ -1,10 +1,10 @@
-package com.shop.web.schedule.controller;
+package com.shop.batch.schedule.controller;
 
+import com.shop.batch.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.shop.web.schedule.service.ScheduleService;
 
 @RestController
 @RequestMapping("/schedule")

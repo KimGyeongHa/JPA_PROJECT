@@ -1,4 +1,4 @@
-package com.shop.web.schedule.util.job;
+package com.shop.batch.schedule.util.quartz;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

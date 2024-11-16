@@ -8,7 +8,6 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'com.auth0:java-jwt:4.4.0'
 }
 

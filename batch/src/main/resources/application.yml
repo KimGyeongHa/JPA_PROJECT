@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/catsDB
+    username: sa
+    password: 1234
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default-batch-fetch-size: 100
+        format_sql: true
+        # show_sql: true
+
+  batch:
+    job:
+      enabled: true
+  jdbc:
+    initialize-schema: ALWAYS
+

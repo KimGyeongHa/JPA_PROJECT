@@ -1,8 +1,8 @@
-package com.shop.domain.provide.domain.job;
+package com.shop.batch.job;
 
 
-import com.shop.domain.provide.domain.job.listener.JobLoggerListener;
-import com.shop.domain.provide.domain.job.validator.Validating;
+import com.shop.batch.job.listener.JobLoggerListener;
+import com.shop.batch.job.validator.Validating;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;

@@ -1,4 +1,4 @@
-package com.shop.domain.provide.domain.job.file;
+package com.shop.batch.job.file;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
